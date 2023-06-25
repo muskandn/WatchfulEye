@@ -1,2 +1,2 @@
 # WatchfulEye
-A CCTv based  Voilence Detection System
+A CCTV-based  Violence Detection System
