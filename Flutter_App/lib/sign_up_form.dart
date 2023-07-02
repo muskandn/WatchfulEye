@@ -17,3 +17,21 @@ class _SignUpFormState extends State<SignUpForm> {
     'password': '',
   };
 }
+
+void _showErrorDialog(String title, String message) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('OK'),
+          )
+        ],
+      );
+    },
+  );
+}
