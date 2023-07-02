@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'http_exception.dart';
 
 //Auth Provider
 class Auth with ChangeNotifier {
@@ -21,4 +22,11 @@ class Auth with ChangeNotifier {
         _expiryDate.isAfter(DateTime.now())) return _token;
     return null;
   }
+}
+
+//getter for organization name
+Future<String> get organization async {
+  var user = _auth.currentUser;
+  notifyListeners();
+  return user != null ? user.displayName : '';
 }
