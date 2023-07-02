@@ -74,4 +74,14 @@ class _SignInFormState extends State<SignInForm> {
       _isLoading = false;
     });
   }
+
+  final _passwordController = TextEditingController();
+  final _passwordFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
 }
