@@ -109,3 +109,14 @@ Future<void> signupWithEmail(
 ) async {
   await _authenticateWithEmail(organization, 'signup', email, password);
 }
+//method to sign in user with email
+Future<bool> loginWithEmail(
+  String email,
+  String password,
+) async {
+  try {
+    return await _authenticateWithEmail('', 'login', email, password);
+  } catch (error) {
+    throw HttpException(error.code);
+  }
+}
