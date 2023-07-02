@@ -120,3 +120,15 @@ Future<bool> loginWithEmail(
     throw HttpException(error.code);
   }
 }
+
+//method to logout user
+Future<void> logout() async {
+  _token = null;
+  _expiryDate = null;
+  if (_authTimer != null) {
+    _authTimer.cancel();
+    _authTimer = null;
+  }
+  await FirebaseAuth.instance.signOut();
+  notifyListeners();
+}
