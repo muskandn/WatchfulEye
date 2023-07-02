@@ -57,3 +57,47 @@ Future<String> get userId async {
   }
   return _userId;
 }
+//general method to authenticate (sign up + sign in) user using email + password
+//uses mode parameter to switch between sign in and sign up
+Future<bool> _authenticateWithEmail(
+  String organization,
+  String mode,
+  String email,
+  String password,
+) async {
+  UserCredential res;
+  try {
+    if (mode == 'signup') {
+      res = (await _auth.createUserWithEmailAndPassword(
+        //firebase package method
+        email: email,
+        password: password,
+      ));
+      await res.user.sendEmailVerification();
+    } else {
+      res = await _auth.signInWithEmailAndPassword(
+          //firebase package method
+          email: email,
+          password: password);
+      if (!res.user.emailVerified) {
+        await res.user.sendEmailVerification();
+      }
+    }
+    User user = res.user;
+    _userId = user.uid;
+    _token = await user.getIdTokenResult(); //obtain user's token data
+    _expiryDate = _token.expirationTime; //obtain token expiry date
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    print("Organization ID ${user.displayName}");
+    _firebaseMessaging.subscribeToTopic(user.displayName);
+    if (mode == 'signup') {
+      user.updateProfile(displayName: organization);
+    }
+  } catch (error) {
+    throw error;
+  }
+
+  _autoLogout(); //autologout method called to start logout timer based on token expiry date
+  notifyListeners();
+  return res.user.emailVerified;
+}
