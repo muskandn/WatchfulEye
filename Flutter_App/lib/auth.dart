@@ -101,3 +101,11 @@ Future<bool> _authenticateWithEmail(
   notifyListeners();
   return res.user.emailVerified;
 }
+//method to sign up user with email
+Future<void> signupWithEmail(
+  String organization,
+  String email,
+  String password,
+) async {
+  await _authenticateWithEmail(organization, 'signup', email, password);
+}
