@@ -84,4 +84,81 @@ class _SignInFormState extends State<SignInForm> {
     _passwordFocusNode.dispose();
     super.dispose();
   }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
+    return Container(
+      height: 250,
+      constraints: BoxConstraints(minHeight: 250),
+      width: deviceSize.width * 0.85,
+      padding: EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Theme(
+                data: Theme.of(context)
+                    .copyWith(primaryColor: Theme.of(context).accentColor),
+                child: TextFormField(
+                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  keyboardType: TextInputType.emailAddress,
+                  autofocus: true,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (value) {
+                    _passwordFocusNode.requestFocus();
+                  },
+                  validator: (value) {
+                    if (value.isEmpty || !value.contains('@')) {
+                      return 'Invalid email';
+                    }
+                  },
+                  onSaved: (value) {
+                    _authData['email'] = value;
+                  },
+                ),
+              ),
+              Theme(
+                data: Theme.of(context)
+                    .copyWith(primaryColor: Theme.of(context).accentColor),
+                child: TextFormField(
+                  decoration: InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                  focusNode: _passwordFocusNode,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (_) => _submit(),
+                  controller: _passwordController,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter a password';
+                    }
+                  },
+                  onSaved: (value) {
+                    _authData['password'] = value;
+                  },
+                ),
+              ),
+              if (_isLoading)
+                CircularProgressIndicator()
+              else
+                RaisedButton(
+                  child: Text('SIGN IN'),
+                  onPressed: _submit,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                  color: Colors.white,
+                  textColor: Colors.black,
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
