@@ -49,3 +49,11 @@ Future<bool> get isAuth async {
   return user != null && user.emailVerified;
 }
 
+//getter for userId. Also utilises currentUser()
+Future<String> get userId async {
+  if (_userId == null) {
+    var res = _auth.currentUser;
+    return res.uid;
+  }
+  return _userId;
+}
