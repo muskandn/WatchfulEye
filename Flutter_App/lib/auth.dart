@@ -30,3 +30,9 @@ Future<String> get organization async {
   notifyListeners();
   return user != null ? user.displayName : '';
 }
+
+Future<String> get email async {
+  var user = _auth.currentUser;
+  notifyListeners();
+  return user != null ? user.email : "";
+}
