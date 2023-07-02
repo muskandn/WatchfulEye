@@ -36,3 +36,16 @@ Future<String> get email async {
   notifyListeners();
   return user != null ? user.email : "";
 }
+
+//getter for isAuth bool flag. Utilises currentUser() method to obtain data and refresh user's token simultaneously
+Future<bool> get isAuth async {
+  var user = _auth.currentUser;
+  if (user != null) {
+    _token = await user.getIdTokenResult();
+    _expiryDate = _token.expirationTime;
+    _userId = user.uid;
+    notifyListeners();
+  }
+  return user != null && user.emailVerified;
+}
+
