@@ -22,7 +22,7 @@ class Auth with ChangeNotifier {
         _expiryDate.isAfter(DateTime.now())) return _token;
     return null;
   }
-}
+
 
 //getter for organization name
 Future<String> get organization async {
@@ -131,4 +131,14 @@ Future<void> logout() async {
   }
   await FirebaseAuth.instance.signOut();
   notifyListeners();
+}
+
+  //method to auto-logout user on token expiration (in case token is not refreshed)
+  void _autoLogout() {
+    if (_authTimer != null) {
+      _authTimer.cancel();
+    }
+    final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
+    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
+  }
 }
