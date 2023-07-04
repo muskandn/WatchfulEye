@@ -169,6 +169,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   @override
+  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: (exit || widget.controller == null)
@@ -186,7 +187,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          if (exit || widget.controller == null)
+        if (exit || widget.controller == null)
           SizedBox(
             height: 40,
           ),
@@ -196,7 +197,55 @@ class _MainPageState extends State<MainPage> {
             size: 80,
             color: Colors.white70,
           ),
-      ],
-    );
+        if (!exit && widget.controller != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Text(
+              widget.message,
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        if (widget.controller != null && !exit)
+          FutureBuilder(
+            future: widget.initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                // If the VideoPlayerController has finished initialization, use
+                // the data it provides to limit the aspect ratio of the video.
+                return Card(
+                  margin: const EdgeInsets.all(16),
+                  child: AspectRatio(
+                    aspectRatio: widget.controller.value.aspectRatio,
+                    // Use the VideoPlayer widget to display the video.
+                    child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 20.0,
+                              offset: Offset(0, 5),
+                              spreadRadius: 0.9,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                              width: 2, color: Theme.of(context).accentColor)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: VideoPlayer(widget.controller),
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                // If the VideoPlayerController is still initializing, show a
+                // loading spinner.
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
   }
 }
