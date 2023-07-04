@@ -152,3 +152,17 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+class MainPage extends StatefulWidget {
+  String message, camID, location;
+  double latitude, longitude;
+
+  VideoPlayerController controller;
+  Future<void> initializeVideoPlayerFuture;
+
+  MainPage(this.message, this.camID, this.location, this.latitude,
+      this.longitude, this.controller, this.initializeVideoPlayerFuture);
+
+  @override
+  _MainPageState createState() => _MainPageState();
+}
