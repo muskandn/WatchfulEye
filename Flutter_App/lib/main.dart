@@ -186,6 +186,16 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
+          if (exit || widget.controller == null)
+          SizedBox(
+            height: 40,
+          ),
+        if (exit || widget.controller == null)
+          Icon(
+            Icons.security,
+            size: 80,
+            color: Colors.white70,
+          ),
       ],
     );
   }
