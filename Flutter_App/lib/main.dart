@@ -45,3 +45,35 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
+class _MyAppState extends State<MyApp> {
+  bool isAuth = false;
+  String _camID = "", message = "No violence", _location = "";
+  double _latitude, _longitude;
+  VideoPlayerController _controller;
+  Future<void> _initializeVideoPlayerFuture;
+
+  Future<dynamic> _notificationHandler(
+      Map<String, dynamic> notification) async {
+    final dynamic data = notification['data'] ?? notification;
+    setState(() async {
+      message = "Violence detected";
+      _camID = data['camID'];
+      _latitude = double.parse(data['latitude']);
+      _longitude = double.parse(data['longitude']);
+      List<Address> addreses = await Geocoder.local
+          .findAddressesFromCoordinates(Coordinates(_latitude, _longitude));
+      _location = addreses.first.featureName;
+      String file = data['file'];
+      exit = false;
+      String downloadURL =
+          await FirebaseStorage.instance.ref('/$file.mp4').getDownloadURL();
+      print(downloadURL);
+      _controller = VideoPlayerController.network(downloadURL);
+      _initializeVideoPlayerFuture = _controller.initialize();
+      _controller.setLooping(true);
+      _controller.play();
+    });
+    await HapticFeedback.heavyImpact();
+  }
+}
