@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -139,7 +139,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
-          
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            height: 80,
+          )
         ],
       ),
     );
