@@ -101,4 +101,54 @@ class _MyAppState extends State<MyApp> {
     _controller.dispose();
     super.dispose();
   }
+  @override
+  Widget build(BuildContext context) {
+    if (exit) _controller.dispose();
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => Auth(),
+        )
+      ],
+      child: Consumer<Auth>(
+        builder: (context, auth, _) {
+          auth.isAuth.then((value) {
+            setState(() {
+              isAuth = value;
+            });
+          });
+
+          return MaterialApp(
+            title: 'HawkEye',
+            theme: ThemeData(
+              brightness: Brightness.dark,
+              primaryColor: Color(0xFF121212),
+              accentColor: Colors.red,
+            ),
+            home: Scaffold(
+              appBar: isAuth
+                  ? AppBar(
+                      title: Text("HawkEye"),
+                      backgroundColor: Colors.redAccent,
+                      elevation: 50.0,
+                      actions: [
+                        IconButton(
+                          icon: Icon(Icons.logout),
+                          onPressed: () {
+                            auth.logout();
+                          },
+                        )
+                      ],
+                    )
+                  : null,
+              body: isAuth
+                  ? MainPage(message, _camID, _location, _latitude, _longitude,
+                      _controller, _initializeVideoPlayerFuture)
+                  : LoginPage(),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
