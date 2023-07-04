@@ -247,5 +247,62 @@ class _MainPageState extends State<MainPage> {
               }
             },
           ),
+          if (widget.controller != null && !exit)
+          Center(
+            child: Column(
+              children: [
+                Text(
+                  "Details",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        blurRadius: 20.0,
+                        offset: Offset(0, 3),
+                        spreadRadius: 0.9,
+                      )
+                    ],
+                  ),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: Theme.of(context).accentColor,
+                        width: 1,
+                      ),
+                    ),
+                    color: Colors.black,
+                    child: Container(
+                      height: 100,
+                      width: 360,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Camera ID : ${widget.camID}",
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          Text(
+                            "Location : ${widget.location}",
+                            style: TextStyle(fontSize: 17),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
   }
 }
