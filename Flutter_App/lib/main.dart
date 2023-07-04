@@ -166,3 +166,27 @@ class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
 }
+
+class _MainPageState extends State<MainPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: (exit || widget.controller == null)
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.spaceAround,
+      children: [
+        if (exit || widget.controller == null)
+          Center(
+            child: Text(
+              "No violence detected",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white70,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
