@@ -304,5 +304,48 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
+
+            if (!exit && widget.controller != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 32.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ButtonTheme(
+                  minWidth: 150,
+                  height: 50,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: RaisedButton(
+                    color: Theme.of(context).accentColor,
+                    onPressed: () async {
+                      Position _currentPosition;
+                      await Geolocator.getCurrentPosition(
+                              desiredAccuracy: LocationAccuracy.high)
+                          .then((Position position) async {
+                        setState(() {
+                          // Store the position in the variable
+                          _currentPosition = position;
+                        });
+                        String mapOptions = [
+                          'saddr=${_currentPosition.latitude},${_currentPosition.longitude}',
+                          'daddr=${widget.latitude},${widget.longitude}',
+                          'dir_action=navigate'
+                        ].join('&');
+                        final url = 'https://www.google.com/maps?$mapOptions';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      }).catchError((e) {
+                        print(e);
+                        _showErrorDialog(context, "Something went wrong", e);
+                      });
+                    },
+                    child: Text("Navigate"),
+                  ),
+                ),
   }
 }
