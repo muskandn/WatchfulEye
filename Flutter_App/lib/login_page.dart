@@ -54,4 +54,94 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Spacer(),
+          //auth screen title...
+          Text(
+            'Welcome to'.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodyText1.color,
+              fontSize: 18,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+          RichText(
+            textAlign: TextAlign.center,
+            text: new TextSpan(children: <TextSpan>[
+              new TextSpan(
+                text: 'HAWK',
+                style: TextStyle(
+                    fontSize: 45,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w300,
+                    color: Theme.of(context).textTheme.bodyText1.color),
+              ),
+              new TextSpan(
+                text: 'EYE',
+                style: TextStyle(
+                  fontSize: 45,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+            ]),
+          ),
+          Spacer(),
+          //auth functionality...
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              //Sign in with email button
+              Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: RaisedButton(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  onPressed: () {
+                    setState(() {
+                      isSigningIn = true;
+                    });
+                    _showFormDialog(context);
+                  },
+                  color: Color(0xDEFFFFFF),
+                  textColor: Colors.black,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.email),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Sign In / Sign Up',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          
+        ],
+      ),
+    );
+  }
 }
