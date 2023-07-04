@@ -347,5 +347,26 @@ class _MainPageState extends State<MainPage> {
                     child: Text("Navigate"),
                   ),
                 ),
+                ButtonTheme(
+                  minWidth: 150,
+                  height: 50,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        exit = true;
+                      });
+                    },
+                    child: Text("Close"),
+                    color: Theme.of(context).accentColor,
+                  ),
+                )
+              ],
+            ),
+          ),
+      ],
+    );
   }
-}
+  }
