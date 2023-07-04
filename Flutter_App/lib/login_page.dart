@@ -37,4 +37,21 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+    void _showErrorDialog(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('OK'),
+            )
+          ],
+        );
+      },
+    );
+  }
 }
