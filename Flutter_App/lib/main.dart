@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
       String file = data['file'];
       exit = false;
       String downloadURL =
-          await FirebaseStorage.instance.ref('/$file.mp4').getDownloadURL();
+          await FirebaseStorage.instance.ref('/$file.mp4').getDownloadURL()
       print(downloadURL);
       _controller = VideoPlayerController.network(downloadURL);
       _initializeVideoPlayerFuture = _controller.initialize();
@@ -75,5 +75,30 @@ class _MyAppState extends State<MyApp> {
       _controller.play();
     });
     await HapticFeedback.heavyImpact();
+  }
+
+  @override
+  void initState() {
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    // For iOS request permission first.
+    _firebaseMessaging
+        .requestNotificationPermissions(IosNotificationSettings());
+    _firebaseMessaging.configure(
+      onMessage: _notificationHandler,
+      onResume: _notificationHandler,
+      onLaunch: _notificationHandler,
+    );
+
+    _firebaseMessaging.getToken().then((token) {
+      print("FirebaseMessaging token: $token");
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
