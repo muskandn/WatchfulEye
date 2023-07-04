@@ -1,4 +1,13 @@
 import cv2
+import numpy as np
+from keras.models import load_model
+import tensorflow as tf
+from multiprocessing import Process
+from firebase_admin import messaging, credentials, storage
+import firebase_admin
+from datetime import datetime
+import threading
+import time
 
 hit = False
 hit_sensitivity = 0
@@ -17,3 +26,10 @@ counter = 0
 flag = False
 start_splicing = False
 model = load_model('model_hawkeye')
+
+cred = credentials.Certificate(
+    "hawkeye-abd94-firebase-adminsdk-vz5ev-e084e72618.json")
+firebase_admin.initialize_app(cred, {
+    'storageBucket': 'hawkeye-abd94.appspot.com'
+})
+bucket = storage.bucket()
