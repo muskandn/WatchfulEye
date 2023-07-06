@@ -115,3 +115,14 @@ def pre_process(frames):
             curr_frame.astype('uint8'), cv2.COLOR_BGR2RGB)
         curr_frame = np.reshape(curr_frame, (224, 224, 3))
         curr_frames_resized[i] = curr_frame
+
+        
+    curr_flows = getOpticalFlow(curr_frames_resized)
+
+    result = np.zeros((len(curr_flows), 224, 224, 5))
+    result[..., :3] = curr_frames_resized
+    result[..., 3:] = curr_flows
+
+    result = normalize(result)
+
+    prediction(result, frames)
