@@ -42,3 +42,22 @@ def prediction(current_frames, original_footage):
         global hit
         hit = True
         print("Violence Detected")
+    
+      now = datetime.now().strftime("%Y%m%d%H%M%s")
+        fourcc = cv2.VideoWriter_fourcc('M', 'P', '4', 'V')
+        video_filename = f'Videos/{topic}_{now}.mp4'
+        out = cv2.VideoWriter(video_filename, fourcc, camera_fps,
+                              (original_footage[0].shape[1], original_footage[0].shape[0]))
+        for frame in original_footage:
+            out.write(frame)
+        out.release()
+        blob = bucket.blob(f"{topic}_{now}.mp4")
+        blob.upload_from_filename(filename=video_filename)
+        data = {
+            "click_action": "FLUTTER_NOTIFICATION_CLICK",
+            "camID": "007",
+            "latitude": "23.4",
+            "longitude": "89.1",
+            "file": f"{topic}_{now}"
+        }
+
