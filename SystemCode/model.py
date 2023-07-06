@@ -96,3 +96,8 @@ def normalize(data):
     mean = np.mean(data)
     std = np.std(data)
     return (data-mean) / std
+
+def pre_process(frames):
+    curr_frames = np.zeros(
+        (len(frames), frames[0].shape[0], frames[0].shape[1], frames[0].shape[2]))
+    curr_frames_resized = np.zeros((64, 224, 224, 3))
