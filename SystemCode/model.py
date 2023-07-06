@@ -107,4 +107,11 @@ def pre_process(frames):
         curr_ind = int((len(frames)/64)*i)
         curr_frames[i] = frames[curr_ind]
 
-    
+    for i in range(0, 64):
+        curr_frame = curr_frames[i]
+        curr_frame = cv2.resize(curr_frame, (224, 224),
+                                interpolation=cv2.INTER_AREA)
+        curr_frame = cv2.cvtColor(
+            curr_frame.astype('uint8'), cv2.COLOR_BGR2RGB)
+        curr_frame = np.reshape(curr_frame, (224, 224, 3))
+        curr_frames_resized[i] = curr_frame
