@@ -126,3 +126,48 @@ def pre_process(frames):
     result = normalize(result)
 
     prediction(result, frames)
+def thread_function():
+    while True:
+        if not hit and start_splicing:
+            pre_process(frames)
+
+
+x = threading.Thread(target=thread_function, daemon=True)
+x.start()
+
+while True:
+    img = cap.read()  # Read automatically reads next frames so no duplicate frames
+    cv2.imshow('frame', img[1])
+
+    frames.append(img[1])
+    counter = counter + 1
+
+    if start_splicing:
+        frames = frames[1:]
+
+    if not hit:
+        # Original Code
+        if len(frames) == footage_seconds * camera_fps and counter >= camera_fps:
+            flag = True
+
+        if flag:
+            # TODO : Make this function call independent of the main process
+            # pre_process(frames)
+            flag = False
+            counter = 0
+            start_splicing = True
+
+    else:
+        if hit_sensitivity > (60 * camera_fps):
+            hit_sensitivity = 0
+            hit = False
+        else:
+            hit_sensitivity = hit_sensitivity + 1
+    time.sleep(float(1/camera_fps))
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# After the loop release the cap object
+cap.release()
+# Destroy all the windows
+cv2.destroyAllWindows()
