@@ -71,3 +71,8 @@ def prediction(current_frames, original_footage):
     print(prediction)
 
 
+def getOpticalFlow(video):
+    gray_video = []
+    for i in range(0, video.shape[0]):
+        img = cv2.cvtColor((video[i]).astype('uint8'), cv2.COLOR_RGB2GRAY)
+        gray_video.append(np.reshape(img, (224, 224, 1)))
