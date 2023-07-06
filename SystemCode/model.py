@@ -33,3 +33,12 @@ firebase_admin.initialize_app(cred, {
     'storageBucket': 'hawkeye-abd94.appspot.com'
 })
 bucket = storage.bucket()
+
+def prediction(current_frames, original_footage):
+    current_frames = current_frames.reshape(1, 64, 224, 224, 5)
+    prediction = model.predict(current_frames)
+
+    if prediction[0][0] > 0.75:  # Assuming model predicts as [Nonviolence,Violence]
+        global hit
+        hit = True
+        print("Violence Detected")
