@@ -101,3 +101,10 @@ def pre_process(frames):
     curr_frames = np.zeros(
         (len(frames), frames[0].shape[0], frames[0].shape[1], frames[0].shape[2]))
     curr_frames_resized = np.zeros((64, 224, 224, 3))
+
+    
+    for i in range(0, 64):
+        curr_ind = int((len(frames)/64)*i)
+        curr_frames[i] = frames[curr_ind]
+
+    
