@@ -92,3 +92,7 @@ def getOpticalFlow(video):
     flows.append(np.zeros((224, 224, 2)))
     return np.array(flows, dtype=np.float32)    
 
+def normalize(data):
+    mean = np.mean(data)
+    std = np.std(data)
+    return (data-mean) / std
