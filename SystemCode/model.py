@@ -76,3 +76,19 @@ def getOpticalFlow(video):
     for i in range(0, video.shape[0]):
         img = cv2.cvtColor((video[i]).astype('uint8'), cv2.COLOR_RGB2GRAY)
         gray_video.append(np.reshape(img, (224, 224, 1)))
+
+    flows = []
+    for i in range(0, video.shape[0]-1):
+        flow = cv2.calcOpticalFlowFarneback(
+            gray_video[i], gray_video[i+1], None, 0.5, 3, 15, 3, 5, 1.2, cv2.OPTFLOW_FARNEBACK_GAUSSIAN)
+        flow[..., 0] -= np.mean(flow[..., 0])
+        flow[..., 1] -= np.mean(flow[..., 1])
+        flow[..., 0] = cv2.normalize(
+            flow[..., 0], None, 0, 255, cv2.NORM_MINMAX)
+        flow[..., 1] = cv2.normalize(
+            flow[..., 1], None, 0, 255, cv2.NORM_MINMAX)
+        flows.append(flow)
+
+    flows.append(np.zeros((224, 224, 2)))
+    return np.array(flows, dtype=np.float32)    
+
