@@ -60,4 +60,14 @@ def prediction(current_frames, original_footage):
             "longitude": "89.1",
             "file": f"{topic}_{now}"
         }
+    message = messaging.Message(
+            notification=messaging.Notification(
+                body="Violence Detected", title="Test Message"),
+            topic=topic,
+            data=data
+        )
+        response = messaging.send(message)
+        print('Successfully sent message:', response)
+    print(prediction)
+
 
