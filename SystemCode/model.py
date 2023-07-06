@@ -25,12 +25,12 @@ frames = []
 counter = 0
 flag = False
 start_splicing = False
-model = load_model('model_hawkeye')
+model = load_model('model_watchfulEye')
 
 cred = credentials.Certificate(
-    "hawkeye-abd94-firebase-adminsdk-vz5ev-e084e72618.json")
+    "watchfulEye-abd94-firebase-adminsdk-vz5ev-e084e72618.json")
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'hawkeye-abd94.appspot.com'
+    'storageBucket': 'watchfulEye-abd94.appspot.com'
 })
 bucket = storage.bucket()
 
