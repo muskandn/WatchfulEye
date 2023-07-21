@@ -199,6 +199,9 @@ class _SignUpFormState extends State<SignUpForm> {
                       return null;
                     }),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               if (_isLoading)
                 const CircularProgressIndicator()
               else
