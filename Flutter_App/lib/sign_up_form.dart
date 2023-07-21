@@ -98,3 +98,74 @@ class _SignUpFormState extends State<SignUpForm> {
     _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
+    @override
+  Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
+
+    return Container(
+      height: 360,
+      constraints: const BoxConstraints(minHeight: 360),
+      width: deviceSize.width * 0.85,
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Theme(
+                data: Theme.of(context).copyWith(
+                    primaryColor: Theme.of(context).colorScheme.secondary),
+                child: TextFormField(
+                  decoration:
+                      const InputDecoration(labelText: 'Organization ID'),
+                  autofocus: true,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (value) {
+                    _emailFocusNode.requestFocus();
+                  },
+                  validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Enter a valid ID';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _authData['name'] = value!;
+                  },
+                ),
+              ),
+              Theme(
+                data: Theme.of(context).copyWith(
+                    primaryColor: Theme.of(context).colorScheme.secondary),
+                child: TextFormField(
+                  decoration: const InputDecoration(labelText: 'E-Mail'),
+                  keyboardType: TextInputType.emailAddress,
+                  focusNode: _emailFocusNode,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (value) {
+                    _passwordFocusNode.requestFocus();
+                  },
+                  validator: (value) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        !value.contains('@')) {
+                      return 'Invalid email!';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _authData['email'] = value!;
+                  },
+                ),
+              ),
+              
+              
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  }
