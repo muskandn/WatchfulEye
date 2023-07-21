@@ -184,6 +184,21 @@ class _SignUpFormState extends State<SignUpForm> {
                   },
                 ),
               ),
+              Theme(
+                data: Theme.of(context).copyWith(
+                    primaryColor: Theme.of(context).colorScheme.secondary),
+                child: TextFormField(
+                    focusNode: _confirmPasswordFocusNode,
+                    decoration:
+                        const InputDecoration(labelText: 'Confirm Password'),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value != _passwordController.text) {
+                        return 'Passwords do not match!';
+                      }
+                      return null;
+                    }),
+              ),
               
             ],
           ),
