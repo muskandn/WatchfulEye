@@ -160,7 +160,30 @@ class _SignUpFormState extends State<SignUpForm> {
                   },
                 ),
               ),
-              
+              Theme(
+                data: Theme.of(context).copyWith(
+                    primaryColor: Theme.of(context).colorScheme.secondary),
+                child: TextFormField(
+                  decoration: const InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                  focusNode: _passwordFocusNode,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (value) {
+                    _confirmPasswordFocusNode.requestFocus();
+                  },
+                  controller: _passwordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value.length < 5) {
+                      return 'Password is too short!';
+                    }
+
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _authData['password'] = value!;
+                  },
+                ),
+              ),
               
             ],
           ),
