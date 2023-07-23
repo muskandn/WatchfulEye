@@ -1,4 +1,5 @@
 import 'sign_up_form.dart';
+import 'sign_in_form.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              //auth mode switcher
               isSigningIn = !isSigningIn;
               Navigator.of(context).pop();
               _showFormDialog(context);
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
             'Welcome to'.toUpperCase(),
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Theme.of(context).textTheme.bodyText1.color,
+              color: Theme.of(context).textTheme.bodyLarge!.color,
               fontSize: 18,
               fontFamily: 'Montserrat',
             ),
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 45,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w300,
-                    color: Theme.of(context).textTheme.bodyText1.color),
+                    color: Theme.of(context).textTheme.bodyLarge!.color,
               ),
               new TextSpan(
                 text: 'EYE',
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   fontSize: 45,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w700,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
             ]),
