@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:location_geocoder/location_geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -61,18 +61,21 @@ class _MyAppState extends State<MyApp> {
       _camID = data['camID'];
       _latitude = double.parse(data['latitude']);
       _longitude = double.parse(data['longitude']);
-      List<Address> addreses = await Geocoder.local
+      const apiKey = "";
+      late LocatitonGeocoder geocoder = LocatitonGeocoder(apiKey);
+
+      final address = await geocoder
           .findAddressesFromCoordinates(Coordinates(_latitude, _longitude));
-      _location = addreses.first.featureName;
+      _location = address.first.addressLine;
       String file = data['file'];
       exit = false;
       String downloadURL =
-          await FirebaseStorage.instance.ref('/$file.mp4').getDownloadURL()
+          await FirebaseStorage.instance.ref('/$file.mp4').getDownloadURL();
       print(downloadURL);
-      _controller = VideoPlayerController.network(downloadURL);
-      _initializeVideoPlayerFuture = _controller.initialize();
-      _controller.setLooping(true);
-      _controller.play();
+      _controller = VideoPlayerController.networkUrl(Uri.parse(downloadURL));
+      _initializeVideoPlayerFuture = _controller!.initialize();
+      _controller!.setLooping(true);
+      _controller!.play();
     });
     await HapticFeedback.heavyImpact();
   }
