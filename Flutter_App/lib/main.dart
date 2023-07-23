@@ -180,11 +180,18 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MainPage extends StatefulWidget {
-  String message, camID, location;
-  double latitude, longitude;
+  final String message; // Mark these fields as final
+  final String camID;
+  final String location;
+  final double latitude;
+  final double longitude;
 
-  VideoPlayerController controller;
-  Future<void> initializeVideoPlayerFuture;
+  final VideoPlayerController controller;
+  final Future<void> initializeVideoPlayerFuture;
+  const MainPage(this.message, this.camID, this.location, this.latitude,
+      this.longitude, this.controller, this.initializeVideoPlayerFuture,
+      {super.key});
+
 
   MainPage(this.message, this.camID, this.location, this.latitude,
       this.longitude, this.controller, this.initializeVideoPlayerFuture);
