@@ -25,14 +25,14 @@ frames = []
 counter = 0
 flag = False
 start_splicing = False
-model = load_model('model_watchfulEye')
+model = tf.saved_model.load('model_watchfulEye')
 
-cred = credentials.Certificate(
-    "watchfulEye-abd94-firebase-adminsdk-vz5ev-e084e72618.json")
+cred = credentials.Certificate("/content/drive/MyDrive/WatchfulEYe/watchful-eye-6f40a-firebase-adminsdk-wedbv-a04976f01a.json")
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'watchfulEye-abd94.appspot.com'
-})
+    'storageBucket': 'watchful-eye-6f40a.appspot.com'
+}, name='Watchful Eye')
 bucket = storage.bucket()
+
 
 def prediction(current_frames, original_footage):
     current_frames = current_frames.reshape(1, 64, 224, 224, 5)
