@@ -1,3 +1,5 @@
+from google.colab.patches import cv2_imshow
+from google.colab.patches import cv2_imshow
 import cv2
 import numpy as np
 from keras.models import load_model
@@ -12,7 +14,7 @@ import time
 hit = False
 hit_sensitivity = 0
 # If zero written here captures from laptop camera otherwise we can also pass in a video file here
-device_id = './input.mp4'
+device_id = './demo1.mp4'
 cap = cv2.VideoCapture(device_id)
 
 camera_fps = 30  # camera fps set to 30 by default can be changed to any other value
@@ -136,8 +138,12 @@ x = threading.Thread(target=thread_function, daemon=True)
 x.start()
 
 while True:
-    img = cap.read()  # Read automatically reads next frames so no duplicate frames
-    cv2.imshow('frame', img[1])
+    ret, frame = cap.read()  # Read the next frame from the video
+
+    if not ret:  # If no frame is read, break the loop
+        break
+
+    cv2_imshow(frame)
 
     frames.append(img[1])
     counter = counter + 1
