@@ -22,7 +22,9 @@ class _SignUpFormState extends State<SignUpForm> {
     'password': '',
   };
 
+
   void _showErrorDialog(String title, String message) {
+
     showDialog(
       context: context,
       builder: (context) {
@@ -43,13 +45,14 @@ class _SignUpFormState extends State<SignUpForm> {
   Future<void> _submit() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     if (_formKey.currentState?.validate() == false) {
-      // Invalid!
       return;
     }
+
     _formKey.currentState?.save();
     setState(() {
       _isLoading = true;
     });
+
     try {
       var org = await firestore
           .collection('organizations')
@@ -98,7 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
     _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
-    @override
+  @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
@@ -136,6 +139,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   },
                 ),
               ),
+
               Theme(
                 data: Theme.of(context).copyWith(
                     primaryColor: Theme.of(context).colorScheme.secondary),
