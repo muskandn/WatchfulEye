@@ -145,7 +145,7 @@ class _MyAppState extends State<MyApp> {
           });
 
           return MaterialApp(
-            title: 'HawkEye',
+            title: 'WATCHFULEYE',
             theme: ThemeData(
               brightness: Brightness.dark,
               primaryColor: Color(0xFF121212),
@@ -154,7 +154,7 @@ class _MyAppState extends State<MyApp> {
             home: Scaffold(
               appBar: isAuth
                   ? AppBar(
-                      title: Text("HawkEye"),
+                      title: Text("WATCHFULEYE"),
                       backgroundColor: Colors.redAccent,
                       elevation: 50.0,
                       actions: [

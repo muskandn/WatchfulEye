@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
             textAlign: TextAlign.center,
             text: new TextSpan(children: <TextSpan>[
               new TextSpan(
-                text: 'HAWK',
+                text: 'Watchful',
                 style: TextStyle(
                     fontSize: 45,
                     fontFamily: 'Montserrat',
