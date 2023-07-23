@@ -391,14 +391,16 @@ class _MainPageState extends State<MainPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       setState(() {
                         exit = true;
                       });
                     },
-                    child: Text("Close"),
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
+                    child: const Text("Close"),
                   ),
                 )
               ],
