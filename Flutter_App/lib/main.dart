@@ -82,19 +82,42 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-    // For iOS request permission first.
-    _firebaseMessaging
-        .requestNotificationPermissions(IosNotificationSettings());
-    _firebaseMessaging.configure(
-      onMessage: _notificationHandler,
-      onResume: _notificationHandler,
-      onLaunch: _notificationHandler,
-    );
+    bool initialized = false;
+    final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    if (!initialized) {
+      // For iOS request permission first.
+      firebaseMessaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
 
-    _firebaseMessaging.getToken().then((token) {
-      print("FirebaseMessaging token: $token");
-    });
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+        print("violence detected");
+        final dynamic data = message.data;
+        print(data);
+
+        HapticFeedback.vibrate();
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        print('App opened from terminated state!');
+        final dynamic data = message.data;
+        print(data);
+      });
+
+      firebaseMessaging.getToken().then((token) {
+        print('Firebase Messaging Token: $token');
+      }).catchError((error) {
+        print('Error getting Firebase Messaging token: $error');
+      });
+
+      initialized = true;
+    }
 
     super.initState();
   }
