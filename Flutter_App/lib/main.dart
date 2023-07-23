@@ -350,25 +350,30 @@ class _MainPageState extends State<MainPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: RaisedButton(
-                    color: Theme.of(context).accentColor,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     onPressed: () async {
-                      Position _currentPosition;
+                      Position currentPosition;
+                      currentPosition = await Geolocator.getCurrentPosition(
+                        desiredAccuracy: LocationAccuracy.high,
+                      );
                       await Geolocator.getCurrentPosition(
                               desiredAccuracy: LocationAccuracy.high)
                           .then((Position position) async {
                         setState(() {
                           // Store the position in the variable
-                          _currentPosition = position;
+                          currentPosition = position;
                         });
                         String mapOptions = [
-                          'saddr=${_currentPosition.latitude},${_currentPosition.longitude}',
+                          'saddr=${currentPosition.latitude},${currentPosition.longitude}',
                           'daddr=${widget.latitude},${widget.longitude}',
                           'dir_action=navigate'
                         ].join('&');
                         final url = 'https://www.google.com/maps?$mapOptions';
-                        if (await canLaunch(url)) {
-                          await launch(url);
+                        if (await canLaunchUrl(Uri.parse(url))) {
+                          await launchUrl(Uri.parse(url));
                         } else {
                           throw 'Could not launch $url';
                         }
@@ -377,7 +382,7 @@ class _MainPageState extends State<MainPage> {
                         _showErrorDialog(context, "Something went wrong", e);
                       });
                     },
-                    child: Text("Navigate"),
+                    child: const Text("Navigate"),
                   ),
                 ),
                 ButtonTheme(
