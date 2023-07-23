@@ -176,7 +176,6 @@ class _SignUpFormState extends State<SignUpForm> {
                     if (value == null || value.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
-
                     return null;
                   },
                   onSaved: (value) {

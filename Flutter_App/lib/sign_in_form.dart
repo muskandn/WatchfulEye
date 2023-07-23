@@ -127,7 +127,7 @@ class _SignInFormState extends State<SignInForm> {
 
               Theme(
                 data: Theme.of(context)
-                    .copyWith(primaryColor: Theme.of(context).accentColor),
+                    .copyWith(primaryColor: Theme.of(context).colorScheme.secondary),),
                 child: TextFormField(
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,
@@ -148,7 +148,7 @@ class _SignInFormState extends State<SignInForm> {
               if (_isLoading)
                 CircularProgressIndicator()
               else
-                RaisedButton(
+                ElevatedButton(
                   child: Text('SIGN IN'),
                   onPressed: _submit,
                   shape: RoundedRectangleBorder(
