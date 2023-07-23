@@ -4,8 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'http_exception.dart';
-
+import 'package:http/http.dart' as http;
 //Auth Provider
 class Auth with ChangeNotifier {
   IdTokenResult _token;
