@@ -9,3 +9,5 @@ The detection is done with the assistance of an ML Model implemented in TFLite, 
 ### There are two parts of of this project:
 
 #### 1) The implementation of an example System code in Python (in the `SystemCode` directory) :- 
+This directory offers a Python script implementation that is simple to connect with CCTV systems. It is a multithreaded Python script that runs the ML model in one thread while simultaneously capturing frames from a video stream in another thread using the OpenCV library. This guarantees both the efficient use of computer resources and the seamless execution of many predictions by the ML model.
+
