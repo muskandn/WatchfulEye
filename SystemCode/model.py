@@ -41,7 +41,7 @@ def prediction(current_frames, original_footage):
     if prediction[0][0] > 0.75:  # Assuming model predicts as [Nonviolence,Violence]
         global hit
         hit = True
-        print("Violence Detected")
+        print("Violence is Detected")
     
       now = datetime.now().strftime("%Y%m%d%H%M%s")
         fourcc = cv2.VideoWriter_fourcc('M', 'P', '4', 'V')
@@ -171,3 +171,4 @@ while True:
 cap.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
+
