@@ -4,8 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'http_exception.dart';
-
+import 'package:http/http.dart' as http;
 //Auth Provider
 class Auth with ChangeNotifier {
   IdTokenResult _token;
@@ -34,6 +33,7 @@ Future<String> get organization async {
 Future<String> get email async {
   var user = _auth.currentUser;
   notifyListeners();
+
   return user != null ? user.email : "";
 }
 
@@ -44,6 +44,7 @@ Future<bool> get isAuth async {
     _token = await user.getIdTokenResult();
     _expiryDate = _token.expirationTime;
     _userId = user.uid;
+
     notifyListeners();
   }
   return user != null && user.emailVerified;
@@ -53,6 +54,7 @@ Future<bool> get isAuth async {
 Future<String> get userId async {
   if (_userId == null) {
     var res = _auth.currentUser;
+    
     return res.uid;
   }
   return _userId;
@@ -116,7 +118,8 @@ Future<bool> loginWithEmail(
 ) async {
   try {
     return await _authenticateWithEmail('', 'login', email, password);
-  } catch (error) {
+  } 
+  catch (error) {
     throw HttpException(error.code);
   }
 }
@@ -129,6 +132,7 @@ Future<void> logout() async {
     _authTimer.cancel();
     _authTimer = null;
   }
+
   await FirebaseAuth.instance.signOut();
   notifyListeners();
 }

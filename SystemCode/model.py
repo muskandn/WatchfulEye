@@ -1,3 +1,5 @@
+from google.colab.patches import cv2_imshow
+from google.colab.patches import cv2_imshow
 import cv2
 import numpy as np
 from keras.models import load_model
@@ -12,7 +14,7 @@ import time
 hit = False
 hit_sensitivity = 0
 # If zero written here captures from laptop camera otherwise we can also pass in a video file here
-device_id = './input.mp4'
+device_id = './demo1.mp4'
 cap = cv2.VideoCapture(device_id)
 
 camera_fps = 30  # camera fps set to 30 by default can be changed to any other value
@@ -25,14 +27,14 @@ frames = []
 counter = 0
 flag = False
 start_splicing = False
-model = load_model('model_watchfulEye')
+model = tf.saved_model.load('model_watchfulEye')
 
-cred = credentials.Certificate(
-    "watchfulEye-abd94-firebase-adminsdk-vz5ev-e084e72618.json")
+cred = credentials.Certificate("/content/drive/MyDrive/WatchfulEYe/watchful-eye-6f40a-firebase-adminsdk-wedbv-a04976f01a.json")
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'watchfulEye-abd94.appspot.com'
-})
+    'storageBucket': 'watchful-eye-6f40a.appspot.com'
+}, name='Watchful Eye')
 bucket = storage.bucket()
+
 
 def prediction(current_frames, original_footage):
     current_frames = current_frames.reshape(1, 64, 224, 224, 5)
@@ -136,8 +138,12 @@ x = threading.Thread(target=thread_function, daemon=True)
 x.start()
 
 while True:
-    img = cap.read()  # Read automatically reads next frames so no duplicate frames
-    cv2.imshow('frame', img[1])
+    ret, frame = cap.read()  # Read the next frame from the video
+
+    if not ret:  # If no frame is read, break the loop
+        break
+
+    cv2_imshow(frame)
 
     frames.append(img[1])
     counter = counter + 1
@@ -171,4 +177,7 @@ while True:
 cap.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 830b1d48ff4c8fd9f669ed2c70eea0a3a7066fb3

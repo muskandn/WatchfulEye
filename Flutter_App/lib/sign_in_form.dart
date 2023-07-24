@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'http_exception.dart';
 import 'auth.dart';
 
@@ -24,7 +25,7 @@ class _SignInFormState extends State<SignInForm> {
           title: Text(title),
           content: Text(message),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text('OK'),
             )
@@ -76,7 +77,9 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   final _passwordController = TextEditingController();
+  final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
+  final _confirmPasswordFocusNode = FocusNode();;
 
   @override
   void dispose() {
@@ -121,9 +124,10 @@ class _SignInFormState extends State<SignInForm> {
                   },
                 ),
               ),
+
               Theme(
                 data: Theme.of(context)
-                    .copyWith(primaryColor: Theme.of(context).accentColor),
+                    .copyWith(primaryColor: Theme.of(context).colorScheme.secondary),),
                 child: TextFormField(
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,
@@ -144,7 +148,7 @@ class _SignInFormState extends State<SignInForm> {
               if (_isLoading)
                 CircularProgressIndicator()
               else
-                RaisedButton(
+                ElevatedButton(
                   child: Text('SIGN IN'),
                   onPressed: _submit,
                   shape: RoundedRectangleBorder(
