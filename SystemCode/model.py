@@ -64,7 +64,7 @@ def prediction(current_frames, original_footage):
         }
     message = messaging.Message(
             notification=messaging.Notification(
-                body="Violence Detected", title="Test Message"),
+                body="Violence is Detected", title="Test Message"),
             topic=topic,
             data=data
         )
