@@ -14,3 +14,10 @@ This directory offers a Python script implementation that is simple to connect w
 
 #### 2) The implementation of the Flutter App (in the `Flutter App` directory) :-
 This Directory contains Implementation of our flutter app which can be installed in your devices and will serve as the receiving endpoint of any signal given off from the server . Users who are the security personnal or the security authorities can login to our app and they will get a notification whenever any violence is detected through the cctv cameras . The security authorities will get the details such as Location and a small footage describing violence.Authorities can then stream this video and prepare a response force of an appropiate size. The app also features the ability to show the shortest route to point of crime from the current location of the user using Google Maps. 
+
+
+<div align="center">
+ 
+![IoTs presentation](https://github.com/muskandn/WatchfulEye/assets/99585352/b7f28949-8b98-4d7c-aaa6-77feff7f1e07)
+
+</div>
